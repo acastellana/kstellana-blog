@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Newsletter from '../components/Newsletter.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="Albert Castellana — entrepreneur, builder, and writer. Co-founder of GenLayer and Rally."
+>
+  <div class="container">
+    <div class="about-header">
+      <div class="about-avatar">👤</div>
+      <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Albert Castellana</h1>
+      <p style="color: var(--color-text-muted); font-size: 1rem;">Entrepreneur · Builder · Writer</p>
+    </div>
+
+    <div class="prose">
+      <p>
+        Hi — I'm Albert. I build companies at the intersection of technology and real-world problems.
+        Currently co-founding <a href="https://genlayer.com" target="_blank" rel="noopener">GenLayer</a>,
+        an AI-native blockchain, and <a href="#" target="_blank" rel="noopener">Rally</a> [TODO: add link].
+      </p>
+
+      <p>
+        I live in Spain with my wife and four kids, which has taught me more about prioritization
+        and context-switching than any productivity book ever could.
+      </p>
+
+      <p>
+        This blog is where I think out loud — about startups, technology, strategy, and occasionally
+        the chaos of building things while raising a family. I try to write the posts I wish I
+        had found when I was starting out.
+      </p>
+
+      <h2>Background</h2>
+      <p>
+        [TODO: Add your professional background here — previous companies, education, notable projects]
+      </p>
+
+      <h2>Currently working on</h2>
+      <ul>
+        <li><strong>GenLayer</strong> — AI-native blockchain where validators run LLMs to reach consensus</li>
+        <li><strong>Rally</strong> — [TODO: Add description]</li>
+      </ul>
+
+      <h2>Get in touch</h2>
+      <p>
+        Best way to reach me is on <a href="https://x.com/kstellana" target="_blank" rel="noopener">X/Twitter</a>
+        or by email at [TODO: add email]. I read everything, though I can't always reply quickly.
+      </p>
+    </div>
+
+    <Newsletter />
+  </div>
+</BaseLayout>

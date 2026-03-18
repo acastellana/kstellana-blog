@@ -1,0 +1,80 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+}
+
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// JSON-LD structured data for the blog post
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'Albert Castellana',
+    url: 'https://blog.kstellana.com/about',
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Albert Castellana',
+    url: 'https://blog.kstellana.com',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': Astro.url.toString(),
+  },
+};
+---
+
+<BaseLayout title={title} description={description} type="article" pubDate={pubDate}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+  <div class="container">
+    <a href="/blog" class="back-link">← All posts</a>
+
+    <header class="post-header">
+      <div class="post-header__meta">
+        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+        {updatedFormatted && (
+          <span>· Updated {updatedFormatted}</span>
+        )}
+        {tags && tags.length > 0 && (
+          <span>·</span>
+        )}
+        {tags && tags.map(tag => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+      <h1 class="post-header__title">{title}</h1>
+      <p class="post-header__description">{description}</p>
+    </header>
+
+    <article class="prose">
+      <slot />
+    </article>
+
+    <Newsletter />
+  </div>
+</BaseLayout>

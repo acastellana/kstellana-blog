@@ -1,0 +1,27 @@
+---
+const year = new Date().getFullYear();
+
+const socials = [
+  { label: 'Twitter / X', href: 'https://x.com/kstellana' },
+  { label: 'GitHub', href: 'https://github.com/acastellana' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/acastellana' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <p>&copy; {year} Albert Castellana. All rights reserved.</p>
+      <ul class="footer-social">
+        {socials.map(({ label, href }) => (
+          <li>
+            <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+          </li>
+        ))}
+        <li>
+          <a href="/rss.xml" title="RSS Feed">RSS</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

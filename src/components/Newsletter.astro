@@ -1,0 +1,31 @@
+---
+// Newsletter signup section
+// TODO: Replace form action URL with your Mailchimp form action URL
+// Example: https://kstellana.us1.list-manage.com/subscribe/post?u=XXXXX&amp;id=YYYYY
+const MAILCHIMP_ACTION_URL = '#TODO_REPLACE_WITH_MAILCHIMP_URL';
+---
+
+<section class="newsletter-section">
+  <h2>Stay in the loop</h2>
+  <p>Occasional essays on startups, technology, and building. No spam — unsubscribe anytime.</p>
+  <!-- TODO: Replace action URL with your actual Mailchimp embed URL -->
+  <form
+    class="newsletter-form"
+    action={MAILCHIMP_ACTION_URL}
+    method="POST"
+    target="_blank"
+    novalidate
+  >
+    <input
+      type="email"
+      name="EMAIL"
+      placeholder="you@example.com"
+      required
+      aria-label="Email address"
+      autocomplete="email"
+    />
+    <!-- Hidden field required by Mailchimp -->
+    <input type="hidden" name="b_TODO_REPLACE" value="" aria-hidden="true" />
+    <button type="submit" class="btn">Subscribe</button>
+  </form>
+</section>

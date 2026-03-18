@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Group posts by year, then month
+const grouped: Record<number, Record<number, typeof posts>> = {};
+for (const post of posts) {
+  const year = post.data.pubDate.getFullYear();
+  const month = post.data.pubDate.getMonth(); // 0-indexed
+  if (!grouped[year]) grouped[year] = {};
+  if (!grouped[year][month]) grouped[year][month] = [];
+  grouped[year][month].push(post);
+}
+
+const years = Object.keys(grouped).map(Number).sort((a, b) => b - a);
+
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+---
+
+<BaseLayout
+  title="Archive"
+  description="Full archive of all posts by Albert Castellana, grouped by year and month."
+>
+  <div class="container">
+    <div style="margin-bottom: 2.5rem;">
+      <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Archive</h1>
+      <p style="color: var(--color-text-muted); font-size: 0.9375rem;">{posts.length} posts total</p>
+    </div>
+
+    {years.map(year => (
+      <div class="archive-year">
+        <h2>{year}</h2>
+        {Object.keys(grouped[year]).map(Number).sort((a, b) => b - a).map(month => (
+          <div class="archive-month">
+            <h3>{MONTH_NAMES[month]}</h3>
+            {grouped[year][month].map(post => (
+              <div class="archive-post">
+                <span class="archive-post__date">
+                  {post.data.pubDate.toLocaleDateString('en-US', { day: '2-digit' })}
+                </span>
+                <div class="archive-post__title">
+                  <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</BaseLayout>
